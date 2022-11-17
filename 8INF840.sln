@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "8INF840", "8INF840.vcxproj", "{954A092A-82CD-4F00-A77F-818AAF0CD8F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{EAC88565-A447-49EF-8510-3E18AB6E854E}"
+	ProjectSection(SolutionItems) = preProject
+		KD_TREE\exo1.cpp = KD_TREE\exo1.cpp
+		KD_TREE\kdNode.cpp = KD_TREE\kdNode.cpp
+		KD_TREE\kdNode.h = KD_TREE\kdNode.h
+		KD_TREE\kdTree.cpp = KD_TREE\kdTree.cpp
+		KD_TREE\kdTree.h = KD_TREE\kdTree.h
+		KD_TREE\Point.cpp = KD_TREE\Point.cpp
+		KD_TREE\Point.h = KD_TREE\Point.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{954A092A-82CD-4F00-A77F-818AAF0CD8F7}.Debug|x64.ActiveCfg = Debug|x64
+		{954A092A-82CD-4F00-A77F-818AAF0CD8F7}.Debug|x64.Build.0 = Debug|x64
+		{954A092A-82CD-4F00-A77F-818AAF0CD8F7}.Debug|x86.ActiveCfg = Debug|Win32
+		{954A092A-82CD-4F00-A77F-818AAF0CD8F7}.Debug|x86.Build.0 = Debug|Win32
+		{954A092A-82CD-4F00-A77F-818AAF0CD8F7}.Release|x64.ActiveCfg = Release|x64
+		{954A092A-82CD-4F00-A77F-818AAF0CD8F7}.Release|x64.Build.0 = Release|x64
+		{954A092A-82CD-4F00-A77F-818AAF0CD8F7}.Release|x86.ActiveCfg = Release|Win32
+		{954A092A-82CD-4F00-A77F-818AAF0CD8F7}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7744B87C-98A5-499E-9E55-D0A23291B6CB}
+	EndGlobalSection
+EndGlobal
