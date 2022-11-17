@@ -4,7 +4,7 @@
 
 class KdNode {
 
-public : 
+public:
 
     Point GetPoint();
     KdNode* GetLeftChild();
@@ -19,5 +19,5 @@ private:
     KdNode* Rightchild;
     KdNode();
     ~KdNode();
-    
-}
+
+};

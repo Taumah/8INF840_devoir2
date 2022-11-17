@@ -1,15 +1,17 @@
 #include "kdTree.h"
 #include "kdNode.h"
 
+using namespace std;
+
 KdTree::KdTree(int k)
 {
-	Point* first = new Point(k);
+	Point first = Point(k);
 	KdTree(k, first);
 }
 
 KdTree::KdTree(int k, Point p): k(k)
 {
-	root = new KdNode(p);
+	//root = new KdNode(p); // à implémenter
    
 }
 
@@ -17,20 +19,20 @@ KdNode KdTree::nearestNeighbor(Point p){
 
 }
 
-void KdNode::addNode(KdNode* n, int i, KdNode* root_){
-     if (n->GetPoint()!) {
+void KdTree::addNode(KdNode* n, int i, KdNode* root_){
+     if (n->GetPoint().getCoord(0) == NULL) {
         cout << "node vide, impossible de l'ajouter"<< endl;
         return;
     }
-    if (n->GetPoint().coord[i] >= root_->point.coord[i]) {
-        if (root_->RightChild =! nullptr) {
-        addNode(n,i+1,root_->RightChild);
+    if (n->GetPoint().getCoord(i) >= root_->GetPoint().getCoord(i)) {
+        if (root_->GetRightChild() != nullptr) {
+        addNode(n,i+1,root_->GetRightChild());
                 root_->SetRightChild(n);
             return;
         }
-    } else if (n->point.coord[i] < root_->point.coord[i]) {
-        if (root_->LeftChild =! nullptr) {
-        addNode(n,i+1,root_->LeftChild);
+    } else if (n->GetPoint().getCoord(i) < root_->GetPoint().getCoord(i)) {
+        if (root_->GetLeftChild() != nullptr) {
+        addNode(n,i+1,root_->GetLeftChild());
         } else { 
                 root_->SetLeftChild(n);
             return;
@@ -38,7 +40,7 @@ void KdNode::addNode(KdNode* n, int i, KdNode* root_){
     }
 }
 
-KdNode KdTree::search(Point p){
+KdNode* KdTree::search(Point p){
     KdNode* current = root;
 
     int depth = 0;

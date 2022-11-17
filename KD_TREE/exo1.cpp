@@ -4,7 +4,7 @@
 
 int main() {
 
-	KdTree tree = new KdTree();
+	KdTree* tree = new KdTree(3);
 
 
 

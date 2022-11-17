@@ -1,38 +1,37 @@
 #include "kdNode.h"
 
-kdNode::kdNode() {
-    point = nullptr;
-    LeftChild = nullptr;
-    RightChild = nullptr;
+KdNode::KdNode() {
+    // point = Point(0);
+    Leftchild = nullptr;
+    Rightchild = nullptr;
 }
 
-kdNode::~kdNode()
+KdNode::~KdNode()
 {
-    delete point;
-    delete LeftChild;
-    delete RightChild;
+    delete Leftchild;
+    delete Rightchild;
 }
 
-Point kdNode::GetPoint() {
+Point KdNode::GetPoint() {
     return point;
 }
 
-Kdnode* kdNode::GetLeftChild(){
-    return LeftChild;
+KdNode* KdNode::GetLeftChild(){
+    return Leftchild;
 }
 
-kdNode* kdNode::GetRightChild(){
-    return RightChild;
+KdNode* KdNode::GetRightChild(){
+    return Rightchild;
 }
 
-void kdNode::SetPoint(Point point_) {
+void KdNode::SetPoint(Point point_) {
     point = point_;
 }
 
-void kdNode::SetLeftChild(kdNode* leftChild_){
-    LeftChild = leftChild_;
+void KdNode::SetLeftChild(KdNode* leftChild_){
+    Leftchild = leftChild_;
 }
 
-void kdNode::SetRightChild(kdNode* leftChild_){
-    RightChild = RightChild_;
+void KdNode::SetRightChild(KdNode* RightChild_){
+    Rightchild = RightChild_;
 }

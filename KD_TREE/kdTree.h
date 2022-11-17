@@ -17,9 +17,9 @@ public:
 	~KdTree();
 
 	KdNode nearestNeighbor(Point p);
-	addNode(KdNode n);
-	removeNode(KdNode n);
+	void addNode(KdNode* n, int i, KdNode* root_);
+	void removeNode(KdNode n);
 
-	KdNode search(Point p);
+	KdNode* search(Point p);
 
 };
