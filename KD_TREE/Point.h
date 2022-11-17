@@ -8,11 +8,11 @@ using namespace std;
 class Point {
 
 private:
-    vector<int> coord;
+    vector<int> *coord;
 
 public:
     Point(const size_t);
-    Point(const size_t, vector<int>);
+    Point(vector<int> *);
     ~Point();
     int getCoord(int index);
 
