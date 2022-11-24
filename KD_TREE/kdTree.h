@@ -7,19 +7,23 @@ class KdTree {
 
 private:
 	int k;  // n° dimensions
+	void parcoursInfixe(KdNode* start);
 
 
 public:
 	KdNode *root;
 
 	KdTree(int);
-	KdTree(int, Point root);
+	KdTree(int, Point *root);
 	~KdTree();
 
-	KdNode nearestNeighbor(Point p);
+	KdNode* nearestNeighbor(Point p);
 	void addNode(KdNode* n, int i, KdNode* root_);
-	void removeNode(KdNode n);
+	void addNode(KdNode* n);
+	void removeNode(KdNode* n);
 
-	KdNode* search(Point p);
+	KdNode* search(Point *p);
+
+	void parcoursInfixe();
 
 };

@@ -8,6 +8,15 @@ Point::Point(const size_t qty_dimensions) {
 
 Point::Point(vector<int> *coords) : coord(coords){}
 
+Point::Point(int* vals,int spaceDimension)
+{
+	coord = new vector<int>();
+	for (size_t i = 0; i < spaceDimension; i++)
+	{
+		coord->push_back(vals[i]);
+	}
+}
+
 Point::~Point()
 {
 	delete coord;
@@ -25,13 +34,24 @@ int Point::getCoord(int index)
 	
 }
 
-bool Point::isEqualTo(Point other)
+bool Point::isEqualTo(Point* other)
 {
 	for (int i = 0; i < coord->size(); i += 1) {
-		if (coord->at(i) != other.getCoord(i)) {
+		if (coord->at(i) != other->getCoord(i)) {
 			return false;
 		}
 	}
 	return true;
 }
 
+ostream& operator<<(ostream& os, const Point *p)
+{
+	os << "{ ";
+	for (int i = 0; i < p->coord->size(); i += 1) {
+		os << p->coord->at(i);
+		if (i < p->coord->size() - 1) {
+			os << ", ";
+		}
+	}
+	return (os << "}" << endl);
+}

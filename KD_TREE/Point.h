@@ -7,14 +7,13 @@ using namespace std;
 
 class Point {
 
-private:
-    vector<int> *coord;
-
 public:
+    vector<int>* coord;
     Point(const size_t);
     Point(vector<int> *);
+    Point(int* vals,int);
     ~Point();
     int getCoord(int index);
-
-    bool isEqualTo(Point other);
+    friend ostream& operator<<(ostream& os, const Point *p);
+    bool isEqualTo(Point* other);
 };
