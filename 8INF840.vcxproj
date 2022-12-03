@@ -131,15 +131,22 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LABYRINTHS\Cell.cpp" />
+    <ClCompile Include="HYPERGRAPHS\main.cpp" />
     <ClCompile Include="KD_TREE\exo1.cpp" />
     <ClCompile Include="KD_TREE\kdNode.cpp" />
     <ClCompile Include="KD_TREE\kdTree.cpp" />
     <ClCompile Include="KD_TREE\Point.cpp" />
+    <ClCompile Include="LABYRINTHS\main.cpp" />
+    <ClCompile Include="LABYRINTHS\Maze.cpp" />
+    <ClCompile Include="QUADT_REE\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KD_TREE\kdNode.h" />
     <ClInclude Include="KD_TREE\kdTree.h" />
     <ClInclude Include="KD_TREE\Point.h" />
+    <ClInclude Include="LABYRINTHS\Cell.h" />
+    <ClInclude Include="LABYRINTHS\Maze.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
