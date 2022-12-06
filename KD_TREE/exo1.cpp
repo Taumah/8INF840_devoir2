@@ -2,7 +2,7 @@
 
 #include "kdTree.h"
 
-int main() {
+void kdTreeDemo() {
 	 
 	const int spaceDimension = 3;
 	int all_coords[][spaceDimension] = {
@@ -35,6 +35,4 @@ int main() {
 	tree->removeNode(n);
 
 	delete tree;
-
-	return 0;
 }

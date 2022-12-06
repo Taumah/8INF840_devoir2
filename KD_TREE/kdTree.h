@@ -3,6 +3,8 @@
 #include "kdNode.h"
 #include <iostream>
 
+void kdTreeDemo();
+
 class KdTree {
 
 private:
