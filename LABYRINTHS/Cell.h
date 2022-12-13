@@ -1,5 +1,7 @@
 #pragma once
 #include <ostream>
+#include <ostream>
+using namespace std;
 
 
 class Cell {
@@ -14,6 +16,6 @@ public:
 
 	Cell();
 	Cell(bool, bool, bool, bool);
-
+	friend ostream& operator<<(ostream& os, const Cell* c);
 };
 

@@ -1,4 +1,4 @@
-#include "main.h"
+#include "exo3.h"
 
 void growingTree() {
 	srand(time(NULL));
@@ -8,4 +8,7 @@ void growingTree() {
 	maze->build();
 
 	cout << maze << endl;
+
+	//maze->colorSearch(maze->solve(nullptr), nullptr);
+
 }

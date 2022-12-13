@@ -137,7 +137,7 @@
     <ClCompile Include="KD_TREE\kdNode.cpp" />
     <ClCompile Include="KD_TREE\kdTree.cpp" />
     <ClCompile Include="KD_TREE\Point.cpp" />
-    <ClCompile Include="LABYRINTHS\main.cpp" />
+    <ClCompile Include="LABYRINTHS\exo3.cpp" />
     <ClCompile Include="LABYRINTHS\Maze.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QUADT_REE\main.cpp" />
@@ -147,7 +147,7 @@
     <ClInclude Include="KD_TREE\kdTree.h" />
     <ClInclude Include="KD_TREE\Point.h" />
     <ClInclude Include="LABYRINTHS\Cell.h" />
-    <ClInclude Include="LABYRINTHS\main.h" />
+    <ClInclude Include="LABYRINTHS\exo3.h" />
     <ClInclude Include="LABYRINTHS\Maze.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

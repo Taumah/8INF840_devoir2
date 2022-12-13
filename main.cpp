@@ -1,12 +1,12 @@
 # pragma once
 
 #include "KD_tree/kdTree.h"
-#include "LABYRINTHS/main.h"
+#include "LABYRINTHS/exo3.h"
 
 int main() {
 
 	growingTree();
-	//kdTreeDemo();
+	kdTreeDemo();
 
 
 
