@@ -25,7 +25,8 @@ public:
 	Maze(int);
 	void build();
 	
-	vector<tuple<int,int>>* solve(vector<tuple<int, int>>* visitedTiles); // returns path found using BFS, and fills visitedTiles with all searched tiles
+	vector<tuple<int,int>>* solveBFS(vector<tuple<int, int>>* visitedTiles); // returns path found using BFS, and fills visitedTiles with all searched tiles
+	vector<tuple<int,int>>* solveAstar(vector<tuple<int, int>>* visitedTiles); 
 	void colorSearch(vector<tuple<int, int>>* pathToTarget, vector<tuple<int, int>>* visitedTiles);
 
 	friend ostream& operator<<(ostream& os, const Maze* c);

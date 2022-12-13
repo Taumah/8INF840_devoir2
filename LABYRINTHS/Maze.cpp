@@ -45,12 +45,17 @@ void Maze::build()
 
 }
 
-vector<tuple<int, int>>* Maze::solve(vector<tuple<int, int>>* visitedTiles)
+vector<tuple<int, int>>* Maze::solveBFS(vector<tuple<int, int>>* visitedTiles)
 {
 	vector<tuple<int, int>> *path = new vector<tuple<int, int>>();
 
 
 	return path;
+}
+
+vector<tuple<int, int>>* Maze::solveAstar(vector<tuple<int, int>>* visitedTiles)
+{
+	return nullptr;
 }
 
 void Maze::colorSearch(vector<tuple<int, int>> *pathToTarget, vector<tuple<int, int>> *visitedTiles)
