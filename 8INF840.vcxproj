@@ -132,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LABYRINTHS\Cell.cpp" />
-    <ClCompile Include="HYPERGRAPHS\main.cpp" />
     <ClCompile Include="KD_TREE\exo1.cpp" />
     <ClCompile Include="KD_TREE\kdNode.cpp" />
     <ClCompile Include="KD_TREE\kdTree.cpp" />
@@ -140,7 +139,6 @@
     <ClCompile Include="LABYRINTHS\exo3.cpp" />
     <ClCompile Include="LABYRINTHS\Maze.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="QUADT_REE\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KD_TREE\kdNode.h" />

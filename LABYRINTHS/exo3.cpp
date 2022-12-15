@@ -10,5 +10,6 @@ void growingTree() {
 	cout << maze << endl;
 
 	//maze->colorSearch(maze->solve(nullptr), nullptr);
+	maze->solveBFS(nullptr);
 
 }

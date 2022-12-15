@@ -25,6 +25,8 @@ public:
 	void removeNode(KdNode* n);
 
 	KdNode* search(Point *p);
+	KdNode* searchNearestNeighbor(Point* p, KdNode* _current, int i);
+	KdNode* searchBestNode(KdNode* currentBest_, Point* p, int i, KdNode* BestNode);
 
 	void parcoursInfixe();
 

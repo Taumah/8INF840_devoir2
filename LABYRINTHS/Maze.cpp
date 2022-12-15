@@ -24,41 +24,66 @@ void Maze::build()
 {
 	int xCurrent = xStart;
 	int yCurrent = yStart;
-	tuple<int, int> backTracker;
+	Cell backTracker;
 
-	auto visiting = vector<tuple<int, int>>();
+	auto visiting = vector<Cell>();
 
 
 	do{
 		while (nextPath(&xCurrent, &yCurrent) != 1) {
-			visiting.push_back(make_tuple(xCurrent, yCurrent));
+			tiles[yCurrent][xCurrent].position = Point_maze(xCurrent, yCurrent);
+			visiting.push_back(tiles[yCurrent][xCurrent]);
 		}
 		backTracker = visiting.back();
 		visiting.pop_back();
 
 		
-		xCurrent = get<0>(backTracker);
-		yCurrent = get<1>(backTracker);
+		xCurrent = backTracker.position.x;
+		yCurrent = backTracker.position.y;
 	} while (visiting.size());
 
 
 
 }
 
-vector<tuple<int, int>>* Maze::solveBFS(vector<tuple<int, int>>* visitedTiles)
+vector<Cell>* Maze::solveBFS(vector<Cell>* visitedTiles)
 {
-	vector<tuple<int, int>> *path = new vector<tuple<int, int>>();
+	vector<Cell>* path = new vector<Cell>();
+	queue<Cell> memory = queue<Cell>();
+
+	Cell current = tiles[yStart][xStart];
+	current.visited = true;
+	memory.push(current);
+
+	while (!memory.empty()) {
+		current = memory.front();
+		memory.pop();
+		if (current.position.x == xStart && current.position.y == yStart) {
+			return path;
+		}
+		vector<Cell>* adjacent_moves = moves(current.position.x, current.position.y);
+		for (size_t i = 0; i < adjacent_moves->size(); i++)
+		{
+			if (!adjacent_moves->at(i).visited) {
+				adjacent_moves->at(i).visited = true;
+				adjacent_moves->at(i).parent = &current;
+
+				memory.push(adjacent_moves->at(i));
+			}
+		}
+	}
+	return path;
+}
+
+vector<Point_maze>* Maze::solveAstar(vector<Point_maze>* visitedTiles)
+{
+	vector<Point_maze>* path = new vector<Point_maze>();
 
 
 	return path;
 }
 
-vector<tuple<int, int>>* Maze::solveAstar(vector<tuple<int, int>>* visitedTiles)
-{
-	return nullptr;
-}
-
-void Maze::colorSearch(vector<tuple<int, int>> *pathToTarget, vector<tuple<int, int>> *visitedTiles)
+void Maze::colorSearch(vector<Point_maze> *pathToTarget, vector<Point_maze> *visitedTiles)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -80,10 +105,10 @@ void Maze::colorSearch(vector<tuple<int, int>> *pathToTarget, vector<tuple<int, 
 			else if (i == yTarget && j == xTarget) {
 				SetConsoleTextAttribute(hConsole, BACKGROUND_GREEN);
 			}
-			else if (contains(pathToTarget, make_tuple(j,i))) {
+			else if (contains(pathToTarget, tiles[i][j].position)) {
 				SetConsoleTextAttribute(hConsole, BACKGROUND_GREEN);
 			}
-			else if (contains(visitedTiles, make_tuple(j,i))) {
+			else if (contains(visitedTiles, tiles[i][j].position)) {
 				SetConsoleTextAttribute(hConsole, BACKGROUND_GREEN | BACKGROUND_BLUE);
 			}
 			cout << " ";
@@ -137,11 +162,11 @@ ostream& operator<<(ostream& os, const Maze* m)
 }
 
 
-bool Maze::contains(vector<tuple<int, int>> *v, tuple<int, int> t)
+bool Maze::contains(vector<Point_maze> *v, Point_maze t)
 {
 	for (size_t i = 0; i < v->size(); i++)
 	{
-		if (get<0>(v->at(i)) == get<0>(t) && get<1>(v->at(i)) == get<1>(t)) {
+		if (v->at(i).x == t.x && v->at(i).y == t.y) {
 			return true;
 		}
 	}
@@ -149,7 +174,7 @@ bool Maze::contains(vector<tuple<int, int>> *v, tuple<int, int> t)
 }
 
 int Maze::nextPath(int* x, int* y) {
-	 tiles[*y][*x].visited = true;
+	 tiles[*y][*x].built = true;
 	vector<int> *neighbours = scan(*x, *y);
 
 	if (!neighbours->size()) return 1; // all cases around have been visited, need to backtrack
@@ -195,41 +220,41 @@ int Maze::nextPath(int* x, int* y) {
 	 vector<int>* neighbours = new vector<int>();	 
 
 	 if (x > 0)
-		 if (!tiles[y][x - 1].visited)
+		 if (!tiles[y][x - 1].built)
 			 neighbours->push_back(LEFT);
 
 	 if (x < dimensions - 1) 
-		 if (!tiles[y][x + 1].visited)
+		 if (!tiles[y][x + 1].built)
 			 neighbours->push_back(RIGHT);
 
 
 	 if (y > 0)
-		 if (!tiles[y - 1][x].visited)
+		 if (!tiles[y - 1][x].built)
 			 neighbours->push_back(UP);
 
 	 if (y < dimensions - 1)
-		 if (!tiles[y + 1][x].visited)
+		 if (!tiles[y + 1][x].built)
 			 neighbours->push_back(DOWN);
 
 	 return neighbours;
  }
 
- vector<int>* Maze::moves(int x, int y)
+ vector<Cell>* Maze::moves(int x, int y)
  {
-	 vector<int>* moves = new vector<int>();
+	 vector<Cell>* moves = new vector<Cell>();
 
 	 if (tiles[y][x].west)
-		 moves->push_back(LEFT);
+		 moves->push_back(tiles[y][x - 1]);
 
 	 if (tiles[y][x].east)
-		 moves->push_back(RIGHT);
+		 moves->push_back(tiles[y][x + 1]);
 
 
 	 if (tiles[y][x].north)
-		 moves->push_back(UP);
+		 moves->push_back(tiles[y - 1][x]);
 
 	 if (tiles[y][x].south)
-		 moves->push_back(DOWN);
+		 moves->push_back(tiles[y + 1][x]);
 
 	 return moves;
  }

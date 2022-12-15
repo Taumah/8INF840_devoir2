@@ -53,5 +53,5 @@ ostream& operator<<(ostream& os, const Point *p)
 			os << ", ";
 		}
 	}
-	return (os << "}" << endl);
+	return (os << "} ");
 }

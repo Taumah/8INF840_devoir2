@@ -1,10 +1,10 @@
 #include "Cell.h"
 
 Cell::Cell(): 
-	north(false), south(false), east(false), west(false), visited(false){}
+	north(false), south(false), east(false), west(false), built(false), visited(false), parent(nullptr) {}
 
 Cell::Cell(bool _north, bool _south, bool _east, bool _west) :
-	north(_north), south(_south), east(_east), west(_west), visited(false){}
+	north(_north), south(_south), east(_east), west(_west), built(false), visited(false), parent(nullptr) {}
 
 ostream& operator<<(ostream& os, const Cell* c){
 

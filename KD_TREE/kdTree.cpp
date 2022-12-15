@@ -41,6 +41,7 @@ void KdTree::addNode(KdNode* n, int i, KdNode* root_){
         } 
         else{
             root_->SetRightChild(n);
+            n->SetParent(root_);
             return;
         }
     } 
@@ -50,6 +51,7 @@ void KdTree::addNode(KdNode* n, int i, KdNode* root_){
         } 
         else { 
             root_->SetLeftChild(n);
+            n->SetParent(root_);
             return;
         }
     }
@@ -57,14 +59,23 @@ void KdTree::addNode(KdNode* n, int i, KdNode* root_){
 
 void KdTree::removeNode(KdNode* n)
 {
+    if (!n) {
+        return;
+    }
+
     KdNode* toRemove = search(n->GetPoint());
 
     if (!toRemove) return;
 
     if (!toRemove->GetLeftChild() && !toRemove->GetRightChild()) { // leaf node
-        KdNode* tmp = toRemove;
-        toRemove = nullptr;
-        delete tmp; 
+        
+        if (toRemove->GetParent()->GetLeftChild() == toRemove) {
+            toRemove->GetParent()->SetLeftChild(nullptr);
+        }
+        else {
+            toRemove->GetParent()->SetRightChild(nullptr);
+        }        
+        delete toRemove; 
         return;
     }
     
@@ -80,7 +91,9 @@ void KdTree::removeNode(KdNode* n)
         toRemove = toRemove->GetLeftChild(); 
         addNode(toRemove->GetRightChild()); // put it back in place
     }
-    delete tmp; 
+    if (tmp) {
+        delete tmp;
+    }
 }
 
 KdNode* KdTree::search(Point* p){
@@ -100,7 +113,7 @@ KdNode* KdTree::search(Point* p){
             current = current->GetLeftChild();
         }
         else {
-            current = current->GetLeftChild();
+            current = current->GetRightChild();
         }
 
        
@@ -114,6 +127,7 @@ KdNode* KdTree::search(Point* p){
 void KdTree::parcoursInfixe() {
     cout << "parcours" << endl;
     parcoursInfixe(root);
+    cout << endl << endl;
 }
 
 
@@ -124,4 +138,86 @@ void KdTree::parcoursInfixe(KdNode* start) {
 
     parcoursInfixe(start->GetLeftChild());
     parcoursInfixe(start->GetRightChild());
+}
+
+KdNode* KdTree::searchNearestNeighbor(Point* p, KdNode* _current, int i) {
+
+    KdNode* currentBest = root;
+
+    if ( p->getCoord(i) >= _current->GetPoint()->getCoord(i)) {
+        if (_current->GetRightChild() != nullptr) {
+            i = +1;
+            if (i == p->coord->size()) { i = 0; }
+            searchNearestNeighbor(p, _current->GetRightChild(), i);
+        }
+        else {
+            return _current;
+        }
+    }
+    else if (p->getCoord(i) < _current->GetPoint()->getCoord(i)) {
+        if (_current->GetLeftChild() != nullptr) {
+            i = +1;
+            if (i == p->coord->size()) { i = 0; }
+            searchNearestNeighbor(p, _current->GetLeftChild(), i);
+        }
+        else {
+            return _current;
+        }
+    }
+    return searchBestNode(_current, p, i, _current);
+
+}
+
+KdNode* KdTree::searchBestNode(KdNode* currentBest_, Point* p, int i, KdNode* BestNode) {
+
+    if (currentBest_->GetParent() != nullptr) {
+        int c_distance = UINT_MAX;
+        int b_distance = UINT_MAX;
+        for (int j = 0; j < currentBest_->GetParent()->GetPoint()->coord->size(); j++) {
+            c_distance += (currentBest_->GetParent()->GetPoint()->getCoord(j) - p->getCoord(j)) * (currentBest_->GetParent()->GetPoint()->getCoord(j) - p->getCoord(j));
+        }
+        for (int j = 0; j < currentBest_->GetPoint()->coord->size(); j++) {
+            b_distance += (currentBest_->GetPoint()->getCoord(j) - p->getCoord(j)) * (currentBest_->GetPoint()->getCoord(j) - p->getCoord(j));
+        }
+        if (c_distance < b_distance) {
+            if (currentBest_->GetParent()->GetRightChild() != nullptr) {
+                if (currentBest_->GetParent()->GetRightChild() == currentBest_) {
+                    if (currentBest_->GetParent()->GetLeftChild() != nullptr) {
+                        return searchNearestNeighbor(p, currentBest_->GetParent()->GetLeftChild(), i);
+                    }
+                    else {
+                        i -= 1;
+                        if (i == -1) { i = p->coord->size() - 1; }
+                        return searchBestNode(currentBest_->GetParent(), p, i, currentBest_->GetParent());
+                    }
+                }
+            }
+            else if (currentBest_->GetParent()->GetLeftChild() != nullptr) {
+                if (currentBest_->GetParent()->GetLeftChild() == currentBest_) {
+                    if (currentBest_->GetParent()->GetRightChild() != nullptr) {
+                        return searchNearestNeighbor(p, currentBest_->GetParent()->GetRightChild(), i);
+                    }
+                    else {
+                        i -= 1;
+                        if (i == -1) { i = p->coord->size() - 1; }
+                        return searchBestNode(currentBest_->GetParent(), p, i, currentBest_->GetParent());
+                    }
+                }
+            }
+            else {
+                i -= 1;
+                if (i == -1) { i = p->coord->size() - 1; }
+                return searchBestNode(currentBest_->GetParent(), p, i, currentBest_->GetParent());
+            }
+        }
+        else {
+            i -= 1;
+            if (i == -1) { i = p->coord->size() - 1; }
+            return searchBestNode(currentBest_->GetParent(), p, i, BestNode);
+        }
+    }
+    else {
+        cout << " Best Node coordinate for " << p << " is : " << BestNode->GetPoint() << endl;
+        return BestNode;
+    }
 }

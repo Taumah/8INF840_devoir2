@@ -5,7 +5,7 @@
 
 int main() {
 
-	growingTree();
+	//growingTree();
 	kdTreeDemo();
 
 
