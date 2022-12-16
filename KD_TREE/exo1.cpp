@@ -6,7 +6,7 @@ void kdTreeDemo() {
 	 
 	const int spaceDimension = 3;
 	int all_coords[][spaceDimension] = {
-		{0,1,2},
+		{5,-5,5},
 		{-2,3,2},
 		{1,5,1},
 		{-1,-1,-1},
@@ -35,9 +35,17 @@ void kdTreeDemo() {
 
 	KdNode* n = tree->search(p7);
 	KdNode* n2 = tree->search(p5);
+	cout << endl << endl;
+
 
 	cout << "suppression de " << p7 << endl;
 	tree->removeNode(n);
+	cout << endl << endl;
+
+	cout << "suppression de " << p6 << endl;
+	n = new KdNode(p6);
+	tree->removeNode(n);
+	cout << endl << endl;
 
 	tree->parcoursInfixe();
 

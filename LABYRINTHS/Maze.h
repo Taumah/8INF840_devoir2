@@ -17,6 +17,8 @@
 using namespace std;
 using std::get;
 
+
+
 class Maze
 {
 public:
@@ -25,9 +27,9 @@ public:
 	Maze(int);
 	void build();
 	
-	vector<Cell>* solveBFS(vector<Cell>* visitedTiles); // returns path found using BFS, and fills visitedTiles with all searched tiles
-	vector<Point_maze>* solveAstar(vector<Point_maze>* visitedTiles);
-	void colorSearch(vector<Point_maze>* pathToTarget, vector<Point_maze>* visitedTiles);
+	vector<Cell>* solveBFS();
+	vector<Cell>* solveAstar();
+	void colorSearch(vector<Cell>* visitedTiles);
 
 	friend ostream& operator<<(ostream& os, const Maze* c);
 
@@ -41,10 +43,13 @@ private:
 	Cell** tiles;
 
 	vector<int>* scan(int, int);
-	vector<Cell>* moves(int, int);
+	vector<Cell*>* moves(int, int);
 
-	bool contains(vector<Point_maze>*, Point_maze);
+	void reset();
+
+	bool contains(vector<Cell>*, Point_maze*);
 	int nextPath(int* x, int* y);
-	
+	int heuristic(Cell c);
+	vector<Cell> inferPath();
 };
 

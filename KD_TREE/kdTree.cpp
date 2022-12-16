@@ -151,6 +151,7 @@ KdNode* KdTree::searchNearestNeighbor(Point* p, KdNode* _current, int i) {
             searchNearestNeighbor(p, _current->GetRightChild(), i);
         }
         else {
+            cout << "Le noeud le plus proche de " << p << " est : " << _current->GetPoint() << endl;
             return _current;
         }
     }
@@ -161,6 +162,7 @@ KdNode* KdTree::searchNearestNeighbor(Point* p, KdNode* _current, int i) {
             searchNearestNeighbor(p, _current->GetLeftChild(), i);
         }
         else {
+            cout << "Le noeud le plus proche de " << p << " est : " << _current->GetPoint() << endl;
             return _current;
         }
     }
@@ -217,7 +219,7 @@ KdNode* KdTree::searchBestNode(KdNode* currentBest_, Point* p, int i, KdNode* Be
         }
     }
     else {
-        cout << " Best Node coordinate for " << p << " is : " << BestNode->GetPoint() << endl;
+        cout << "Le noeud le plus proche de " << p << " est : " << BestNode->GetPoint() << endl;
         return BestNode;
     }
 }

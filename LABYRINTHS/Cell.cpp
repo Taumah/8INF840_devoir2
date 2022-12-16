@@ -1,10 +1,19 @@
 #include "Cell.h"
 
 Cell::Cell(): 
-	north(false), south(false), east(false), west(false), built(false), visited(false), parent(nullptr) {}
+	north(false), south(false), east(false), west(false), 
+	built(false), visited(false), parent(nullptr), 
+	distFromStart(0), estDistToTarget(0) {}
 
 Cell::Cell(bool _north, bool _south, bool _east, bool _west) :
-	north(_north), south(_south), east(_east), west(_west), built(false), visited(false), parent(nullptr) {}
+	north(_north), south(_south), east(_east), west(_west), 
+	built(false), visited(false), parent(nullptr), 
+	distFromStart(0), estDistToTarget(0) {}
+
+int Cell::distanceTo(Cell other)
+{
+	return abs(position->x - other.position->x) + abs(position->y - other.position->y) ;
+}
 
 ostream& operator<<(ostream& os, const Cell* c){
 

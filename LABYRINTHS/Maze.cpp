@@ -1,4 +1,5 @@
 #include "Maze.h"
+#include <map>
 using namespace std;
 
 Maze::Maze(int _dimensions):dimensions(_dimensions) {
@@ -24,6 +25,7 @@ void Maze::build()
 {
 	int xCurrent = xStart;
 	int yCurrent = yStart;
+	tiles[yCurrent][xCurrent].position = new Point_maze(xCurrent, yCurrent);
 	Cell backTracker;
 
 	auto visiting = vector<Cell>();
@@ -31,61 +33,123 @@ void Maze::build()
 
 	do{
 		while (nextPath(&xCurrent, &yCurrent) != 1) {
-			tiles[yCurrent][xCurrent].position = Point_maze(xCurrent, yCurrent);
+			tiles[yCurrent][xCurrent].position = new Point_maze(xCurrent, yCurrent);
 			visiting.push_back(tiles[yCurrent][xCurrent]);
 		}
 		backTracker = visiting.back();
 		visiting.pop_back();
 
 		
-		xCurrent = backTracker.position.x;
-		yCurrent = backTracker.position.y;
+		xCurrent = backTracker.position->x;
+		yCurrent = backTracker.position->y;
 	} while (visiting.size());
 
+	cout << "build finished " << endl;
 
 
 }
 
-vector<Cell>* Maze::solveBFS(vector<Cell>* visitedTiles)
+vector<Cell>* Maze::solveBFS()
 {
+	reset();
 	vector<Cell>* path = new vector<Cell>();
 	queue<Cell> memory = queue<Cell>();
 
-	Cell current = tiles[yStart][xStart];
-	current.visited = true;
-	memory.push(current);
+	Cell current ;
+	tiles[yStart][xStart].visited = true;
+
+	path->push_back(tiles[yStart][xStart]);
+	memory.push(tiles[yStart][xStart]);
 
 	while (!memory.empty()) {
 		current = memory.front();
 		memory.pop();
-		if (current.position.x == xStart && current.position.y == yStart) {
+		if (current.position->x == xTarget && current.position->y == yTarget) {
 			return path;
 		}
-		vector<Cell>* adjacent_moves = moves(current.position.x, current.position.y);
+		vector<Cell*>* adjacent_moves = moves(current.position->x, current.position->y);
 		for (size_t i = 0; i < adjacent_moves->size(); i++)
 		{
-			if (!adjacent_moves->at(i).visited) {
-				adjacent_moves->at(i).visited = true;
-				adjacent_moves->at(i).parent = &current;
+			if (!adjacent_moves->at(i)->visited) {
+				adjacent_moves->at(i)->visited = true;
+				path->push_back(*adjacent_moves->at(i));
+				adjacent_moves->at(i)->parent = &current;
 
-				memory.push(adjacent_moves->at(i));
+				memory.push(*adjacent_moves->at(i));
 			}
 		}
 	}
 	return path;
 }
 
-vector<Point_maze>* Maze::solveAstar(vector<Point_maze>* visitedTiles)
+vector<Cell>* Maze::solveAstar()
 {
-	vector<Point_maze>* path = new vector<Point_maze>();
+	reset();
+	vector<Cell>* path = new vector<Cell>();
+	vector<Cell> memory = vector<Cell>();
+
+	tiles[yStart][xStart].distFromStart = 0;
+	tiles[yStart][xStart].estDistToTarget = heuristic(tiles[yStart][xStart]);
+	
+	vector<Cell*>::iterator it;
+	Cell current;
+
+	path->push_back(tiles[yStart][xStart]);
+	memory.push_back(tiles[yStart][xStart]);
+
+	while (!memory.empty()) {
+		size_t maxIndex = 0;
+		current = memory.at(0);
+		for (size_t i = 0; i < memory.size(); i++)
+		{
+			if (memory.at(i).distFromStart + memory.at(i).estDistToTarget < current.distFromStart + current.estDistToTarget) {
+				current = memory.at(i);
+				maxIndex = i;
+				
+			}
+		}
+		memory.erase(memory.begin() + maxIndex);
 
 
+		if (current.distanceTo(tiles[yTarget][xTarget]) == 0) {
+			return path;
+		}
+
+		vector<Cell*> *move = moves(current.position->x, current.position->y);
+		for (size_t i = 0; i < move->size(); i++)
+		{
+			int minDist = current.distFromStart + 1; // moving always costs 1
+			if (minDist < move->at(i)->distFromStart) {
+				move->at(i)->parent = &current;
+				move->at(i)->distFromStart = minDist;
+				move->at(i)->estDistToTarget = heuristic(*move->at(i));
+			}
+
+			bool found = false;
+			for (size_t j = 0; j < memory.size(); j++)
+			{
+				if (move->at(i)->distanceTo(memory.at(j)) == 0) {
+					found = true;
+					break;
+				}
+			}
+			if (!found && !move->at(i)->visited) {
+				path->push_back(*move->at(i));
+				move->at(i)->visited = true;
+				memory.push_back(*move->at(i));
+			}
+		}
+		delete move;
+	}
 	return path;
 }
 
-void Maze::colorSearch(vector<Point_maze> *pathToTarget, vector<Point_maze> *visitedTiles)
+
+void Maze::colorSearch(vector<Cell> *visitedTiles)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	//vector<Cell> realPath = inferPath();
+
 
 	cout << "start  : (" << xStart << "," << yStart << ")" << endl;
 	cout << "target : (" << xTarget << "," << yTarget << ")" << endl;
@@ -105,12 +169,12 @@ void Maze::colorSearch(vector<Point_maze> *pathToTarget, vector<Point_maze> *vis
 			else if (i == yTarget && j == xTarget) {
 				SetConsoleTextAttribute(hConsole, BACKGROUND_GREEN);
 			}
-			else if (contains(pathToTarget, tiles[i][j].position)) {
-				SetConsoleTextAttribute(hConsole, BACKGROUND_GREEN);
-			}
 			else if (contains(visitedTiles, tiles[i][j].position)) {
-				SetConsoleTextAttribute(hConsole, BACKGROUND_GREEN | BACKGROUND_BLUE);
+				SetConsoleTextAttribute(hConsole, BACKGROUND_RED | BACKGROUND_GREEN);
 			}
+			/*else if (contains(&realPath, tiles[i][j].position)) {
+				SetConsoleTextAttribute(hConsole, BACKGROUND_GREEN);
+			}*/
 			cout << " ";
 			SetConsoleTextAttribute(hConsole, 15);
 		}
@@ -162,11 +226,11 @@ ostream& operator<<(ostream& os, const Maze* m)
 }
 
 
-bool Maze::contains(vector<Point_maze> *v, Point_maze t)
+bool Maze::contains(vector<Cell> *v, Point_maze *t)
 {
 	for (size_t i = 0; i < v->size(); i++)
 	{
-		if (v->at(i).x == t.x && v->at(i).y == t.y) {
+		if (v->at(i).position->x == t->x && v->at(i).position->y == t->y) {
 			return true;
 		}
 	}
@@ -239,22 +303,56 @@ int Maze::nextPath(int* x, int* y) {
 	 return neighbours;
  }
 
- vector<Cell>* Maze::moves(int x, int y)
+ vector<Cell*>* Maze::moves(int x, int y)
  {
-	 vector<Cell>* moves = new vector<Cell>();
+	 vector<Cell*>* moves = new vector<Cell*>();
 
 	 if (tiles[y][x].west)
-		 moves->push_back(tiles[y][x - 1]);
+		 moves->push_back(&tiles[y][x - 1]);
 
 	 if (tiles[y][x].east)
-		 moves->push_back(tiles[y][x + 1]);
+		 moves->push_back(&tiles[y][x + 1]);
 
 
 	 if (tiles[y][x].north)
-		 moves->push_back(tiles[y - 1][x]);
+		 moves->push_back(&tiles[y - 1][x]);
 
 	 if (tiles[y][x].south)
-		 moves->push_back(tiles[y + 1][x]);
+		 moves->push_back(&tiles[y + 1][x]);
 
 	 return moves;
  }
+
+ void Maze::reset() {
+	 for (size_t i = 0; i < dimensions; i++)
+	 {
+		 for (size_t j = 0; j < dimensions; j++) {
+			 tiles[i][j].visited = false;
+			 tiles[i][j].parent = nullptr;
+			 tiles[i][j].distFromStart = dimensions * dimensions;
+			 tiles[i][j].estDistToTarget = dimensions * dimensions;
+		 }
+	 }
+ }
+
+
+ int Maze::heuristic(Cell current) {
+	 return current.distanceTo(tiles[yTarget][xTarget]);
+ }
+
+ vector<Cell> Maze::inferPath()
+ {
+	 vector<Cell> path = vector<Cell>();
+
+	 Cell current = tiles[yTarget][xTarget];
+	 do {
+		 current = *current.parent;
+		 path.push_back(current);
+	 } while (current.parent);
+
+
+
+	 std::reverse(path.begin(), path.end());
+	 return path;
+ }
+

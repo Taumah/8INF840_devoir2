@@ -19,14 +19,21 @@ public:
 	bool east;
 	bool west;
 
-	Point_maze position;
+	Point_maze* position;
 
 	bool built;
 	bool visited;
 	Cell *parent;
+	int distFromStart;
+	int estDistToTarget;
 
 	Cell();
 	Cell(bool, bool, bool, bool);
+
+	int distanceTo(Cell other);
 	friend ostream& operator<<(ostream& os, const Cell* c);
+	friend bool operator< (Cell const& left, Cell const& right) {
+		return left.estDistToTarget < right.estDistToTarget;
+	}
 };
 
