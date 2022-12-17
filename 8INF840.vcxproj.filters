@@ -43,6 +43,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="QUADT_REE\Source.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="HYPERGRAPHS\Ex2_indegree.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="HYPERGRAPHS\Ex2.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="HYPERGRAPHS\commons.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KD_TREE\kdNode.h">
@@ -63,5 +75,31 @@
     <ClInclude Include="LABYRINTHS\exo3.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="QUADT_REE\quadtree.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="QUADT_REE\stb_image.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="QUADT_REE\stb_image_write.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="HYPERGRAPHS\commons.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="lune.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="montgolfiere.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\..\..\..\AppData\Local\Temp\Rar$DRa14476.695\eu-2005.edges.txt" />
+    <Text Include="..\..\..\..\..\..\..\AppData\Local\Temp\Rar$DRa14476.695\eu-2005.nodes.txt" />
+    <Text Include="..\..\..\..\..\..\..\AppData\Local\Temp\Rar$DRa21276.2643\in-2004.edges.txt" />
+    <Text Include="..\..\..\..\..\..\..\AppData\Local\Temp\Rar$DRa21276.2643\in-2004.nodes.txt" />
   </ItemGroup>
 </Project>

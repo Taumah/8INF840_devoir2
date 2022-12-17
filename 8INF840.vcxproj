@@ -131,6 +131,9 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HYPERGRAPHS\commons.cpp" />
+    <ClCompile Include="HYPERGRAPHS\Ex2.cpp" />
+    <ClCompile Include="HYPERGRAPHS\Ex2_indegree.cpp" />
     <ClCompile Include="LABYRINTHS\Cell.cpp" />
     <ClCompile Include="KD_TREE\exo1.cpp" />
     <ClCompile Include="KD_TREE\kdNode.cpp" />
@@ -139,14 +142,29 @@
     <ClCompile Include="LABYRINTHS\exo3.cpp" />
     <ClCompile Include="LABYRINTHS\Maze.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="QUADT_REE\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HYPERGRAPHS\commons.h" />
     <ClInclude Include="KD_TREE\kdNode.h" />
     <ClInclude Include="KD_TREE\kdTree.h" />
     <ClInclude Include="KD_TREE\Point.h" />
     <ClInclude Include="LABYRINTHS\Cell.h" />
     <ClInclude Include="LABYRINTHS\exo3.h" />
     <ClInclude Include="LABYRINTHS\Maze.h" />
+    <ClInclude Include="QUADT_REE\quadtree.h" />
+    <ClInclude Include="QUADT_REE\stb_image.h" />
+    <ClInclude Include="QUADT_REE\stb_image_write.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="lune.png" />
+    <Image Include="montgolfiere.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\..\..\..\AppData\Local\Temp\Rar$DRa14476.695\eu-2005.edges.txt" />
+    <Text Include="..\..\..\..\..\..\..\AppData\Local\Temp\Rar$DRa14476.695\eu-2005.nodes.txt" />
+    <Text Include="..\..\..\..\..\..\..\AppData\Local\Temp\Rar$DRa21276.2643\in-2004.edges.txt" />
+    <Text Include="..\..\..\..\..\..\..\AppData\Local\Temp\Rar$DRa21276.2643\in-2004.nodes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
